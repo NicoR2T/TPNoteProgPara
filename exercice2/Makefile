@@ -1,4 +1,4 @@
-CC = gcc -Wall
+MPICC = mpicc -Wall
 RM = rm -i
 TAR = tar -cvzf
 srcdir = ./src/
@@ -13,10 +13,10 @@ OMP = -fopenmp
 all : $(PROG)
 
 $(PROG) : $(OBJ)
-	$(CC) $(OMP) $(OBJ) -o $(PROG)
+	$(MPICC) $(OMP) $(OBJ) -o $(PROG)
 
 ./bin/%.o : ./src/%.c
-	$(CC) $(OMP) -c $^ -o $@
+	$(MPICC) $(OMP) -c $^ -o $@
 
 .PHONY : clean
 
