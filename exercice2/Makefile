@@ -8,15 +8,14 @@ HEAD = $(wildcard $(srcdir)*.h)
 SRCP = $(wildcard $(srcdir)*)
 OBJ = $(subst $(srcdir), $(bindir), $(SRC:.c=.o))
 PROG = main
-OMP = -fopenmp
 
 all : $(PROG)
 
 $(PROG) : $(OBJ)
-	$(MPICC) $(OMP) $(OBJ) -o $(PROG)
+	$(MPICC) $(OBJ) -o $(PROG)
 
 ./bin/%.o : ./src/%.c
-	$(MPICC) $(OMP) -c $^ -o $@
+	$(MPICC) -c $^ -o $@
 
 .PHONY : clean
 

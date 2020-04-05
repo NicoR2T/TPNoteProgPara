@@ -1,4 +1,4 @@
-CC = gcc -Wall
+MPICC = mpicc -Wall
 RM = rm -i
 TAR = tar -cvzf
 srcdir = ./src/
@@ -8,15 +8,14 @@ HEAD = $(wildcard $(srcdir)*.h)
 SRCP = $(wildcard $(srcdir)*)
 OBJ = $(subst $(srcdir), $(bindir), $(SRC:.c=.o))
 PROG = main
-OMP = -fopenmp
 
 all : $(PROG)
 
 $(PROG) : $(OBJ)
-	$(CC) $(OMP) $(OBJ) -o $(PROG)
+	$(MPICC) $(OBJ) -o $(PROG)
 
 ./bin/%.o : ./src/%.c
-	$(CC) $(OMP) -c $^ -o $@
+	$(MPICC) -c $^ -o $@
 
 .PHONY : clean
 
