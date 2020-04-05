@@ -1,2 +1,15 @@
-make
-mpirun -np N main
+-Pour pouvoir compiler le programme, il faut utiliser la commande: make
+-Pour l'exécuter, il faut exécuter le fichier main, c'est à dire la commande: mpirun -np N main
+
+Afin de calculer le produit matrice-vecteur, j'ai décidé de reprendre le schéma proposé dans le cours, et d'utliser un processsus pour calculer
+le produit de chaque ligne de la matrice avec le vecteur, puis d'utiliser la fonction MPI_Reduce_scatter pour réduire le résultat obtenu et 
+ainsi avoir le vecteur résultant C qui pourra alors devenir le vecteur d'entrée B pour l'itération suivante.
+
+La fonction MPI_Reduce_scatter est la seule correspondant à l'architecture de programation parallèle que j'ai utilisé, et c'est une fonction
+qui va partir d'une matrice temporaire du vecteur que l'on cherche à obtenir, va la réduire selon un opérateur particulier, ici c'est la somme
+parce que le résultat du produit matrice-vecteur est la somme des produits de chaque ligne avec le vecteur colonne B. Une fois avoir réduit
+les processus, le "scatter" va ensuite renvoyer chaque élément de la matrice résultat dans un processus particulier, et permettre ainsi de pouvoir
+utiliser de nouveau les valeurs du vecteur C si on le souhaite.
+
+Réferences:
+Cours MPI-II (https://arel.eisti.fr/documents/67321)

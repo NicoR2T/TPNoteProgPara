@@ -1,0 +1,17 @@
+-Pour pouvoir compiler le programme, il faut utiliser la commande: make
+-Pour l'exécuter, il faut exécuter le fichier main, c'est à dire la commande: ./main
+
+Pour pouvoir effectuer le tri fusion récursive en utilisant les directives Task, il faut réflechir à la façon de combiner l'algorithme de tri
+fusion de manière séquentiel avec les tâches utilisées dans le paradigme parallèle. J'ai décidé d'utiliser une tâche pour chaque division du tableau
+en sous-tableau et demander à chaque tâche de trier son sous-tableau, puis de réunir le tout dans un seul et même tableau trié.
+
+J'ai utilisé les fonctions suivantes:
+
+#pragma omp parallel        -> qui permet d'appliquer une architecture de programation parallèle 
+#pragma omp single nowait   -> le nowait permet de supprimer la barrière implicite à la fin d'une instruction single
+#pragma omp task            -> génére une nouvelle tâche pour un thread particulier, et permet d'implémenter certain types de parallèlisme difficile à utiliser auparavant
+#pragma omp taskwait        -> permet de synchroniser les tâches d'un même thread, et suspend la tâche tant que les autres ne sont pas complète
+
+Réferences:
+Cours OPenMP-II (https://arel.eisti.fr/documents/67234)
+Cours OpenMP-III (https://arel.eisti.fr/documents/67321)

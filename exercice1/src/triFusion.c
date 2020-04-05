@@ -1,5 +1,8 @@
 #include "triFusion.h"
 
+//Cette fonction va trier un tableau en appliquant la méthode du tri fusion en parallele,
+//c'est à dire qu'elle va partager en de nombreux sous-tableaux le tableau de base et va appeler récursivement la fonction tri
+//pour pouvoir finalement laisser chaque tâche s'occuper d'un sous-tableau et reconstruire le tableau une fois trié
 void triFusion_parallele (int tab[], int taille, int temp[], int nbre_threads) {
     if (nbre_threads == 1) {
         triFusion_fonct(tab, taille, temp);
@@ -26,6 +29,8 @@ void triFusion_parallele (int tab[], int taille, int temp[], int nbre_threads) {
     }
 }
 
+
+//Divise le tableau de manière récursive en divisant la taille par 2 à chaque fois jusqu'à atteindre un sous-tableau d'une taille de 2 maximum
 void triFusion_fonct(int tab[], int taille, int temp[]) {
     if (taille <= 2) {
         tri(tab, taille, temp);
@@ -36,6 +41,7 @@ void triFusion_fonct(int tab[], int taille, int temp[]) {
     tri(tab, taille, temp);
 }
 
+//Tri un sous-tableau et le range dans l'ordre croissant
 void tri(int tab[], int taille, int temp[]) {
     int debut = 0;
     int fin = taille/2;

@@ -1,0 +1,25 @@
+-Pour pouvoir compiler le programme, il faut utiliser la commande: make
+-Pour l'exécuter, il faut exécuter le fichier main, c'est à dire la commande: mpirun -np N main
+
+En utilisant les opérations collectives décrites au paragraphe suivant, l'implémentation du code que j'ai décidé de concevoir permet de connaître
+le résultat du produit de deux matrices. Pour rappel, afin d'obtenir ce résultat il faut calculer la somme du produit de chaque élément en multipliant
+la ligne de la matrice A de départ avec la colonne de la matrice B pour obtenir l'élement situé à la ligne et colonne correspondante
+dans la matrice C d'arrivée. C'est pour cette objectif que j'ai utilisé les fonctions MPI dans l'ordre suivant:
+
+MPI_Init
+MPI_Comm_size   -> ces trois fonctions permettent d'initialiser MPI
+MPI_Comm_rank
+
+MPI_Scatter     -> cette fonction répartit une liste d'élément à autant de processus que d'éléments, pour pouvoir les utiliser plus tard
+                Dans notre programme, cela va nous permettre de décomposer la première matrice en utilisant un processus pour chaque ligne
+MPI_Bcast       -> cette fonction ressemble à la première, sauf que cette fois-ci elle envoit les donnée d'un processus "mère" vers les autres
+                processus. Pour notre programme, il va être utilisé pour gérer la seconde matrice.
+MPI_Barrier     -> Une barrière est utilisé pour assurer la synchronisation des processus en arrêtant l'exécution du programme jusqu'à ce que
+                tous les processus aient atteint ce stade.
+MPI_Gather      -> Le gather permet alors de réunir le résultat une fois avoir effectué le calcul, et peut ainsi donner les valeurs de tous les
+                éléments de la matrice C d'arrivée.
+
+MPI_Finalize    -> enfin cette fonction permet d'indiquer au programme la fin d'utilisation de MPI
+
+Réferences:
+Cours MPI-II (https://arel.eisti.fr/documents/67321)
